@@ -4,6 +4,7 @@ const express = require('express')
 const mongoose = require("mongoose");
 const AdminJSMongoose = require("@adminjs/mongoose");
 const { todo } = require("./todoModel/todo.model.js");
+// const { ShowRecord } = require("./components/showRecord.js");
 require('dotenv').config()
 
 process.env
@@ -33,7 +34,7 @@ const startAdminJs = async () => {
       actions: {
         GetJsonData: {
           actionType: "record",
-          component: AdminJS.bundle('./components/showRecord'),
+          component: AdminJS.bundle("./components/showRecord.js"),
           handler: (request, response, context) => {
             const { record, currentAdmin } = context;
             console.log("record", record);
@@ -48,11 +49,12 @@ const startAdminJs = async () => {
   };
 
   const adminOptions = {
+    databases:[],
     rootPath: "/admin",
     resources: [todoResourceOptions],
   };
 
-  const admin = new AdminJS({})
+  const admin = new AdminJS(adminOptions)
 
   //login details
   const DEFAULT_ADMIN = {
